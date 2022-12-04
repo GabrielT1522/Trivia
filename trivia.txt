@@ -1,0 +1,40 @@
+A1
+What instrument category does a flute belong in?
+Percussion
+Woodwind
+Strings
+Brass
+2
+100
+A2
+How many major scales are there?
+four
+eight
+twelve
+sixteen
+3
+300
+A3
+Who composed the piano piece Clair de Lune?
+Johann Sebastian Bach
+Wolfgang Amadeus Mozart
+Claude Debussy
+Ludwig van Beethoven
+3
+500
+B1
+Who composed the piano piece Clair de Lune?
+Johann Sebastian Bach
+Wolfgang Amadeus Mozart
+Claude Debussy
+Ludwig van Beethoven
+3
+500
+B2
+Who composed the piano piece Clair de Lune?
+Johann Sebastian Bach
+Wolfgang Amadeus Mozart
+Claude Debussy
+Ludwig van Beethoven
+3
+500
