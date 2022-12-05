@@ -1,6 +1,8 @@
+// CSCE 3301 - Algorithms and Data Structures
+// Player.h
+// Trivia
 //
-// Created by Gabriel Torres on 12/3/22.
-//
+// Created by Gabriel Torres on 11/20/22.
 
 #ifndef TRIVIA_PLAYER_H
 #define TRIVIA_PLAYER_H
@@ -29,7 +31,7 @@ public:
         return order;
     }
     void setMoney(int m){
-        money = m;
+        money +=m;
     }
     int getMoney(){
         return money;

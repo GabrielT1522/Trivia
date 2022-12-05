@@ -34,9 +34,7 @@ public:
         front = NULL;
         rear = NULL;
     };
-    ~Deque(){
-        cout << "Deque has been deconstructed\n";
-    };
+    ~Deque() = default;;
     bool isEmpty() {
         if (size() == 0) {
             return true;

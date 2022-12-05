@@ -22,7 +22,7 @@ public:
             sortingArray[i] = dataArray[i];
         }
     };
-    ~Sorting(void) { std::cout << "\nSorting class has been deconstructed.\n"; };
+    ~Sorting() = default;;
 
     void bubbleSort(int n) {
         for (int i=0;i<n-1;i++){

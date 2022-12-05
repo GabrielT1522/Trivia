@@ -11,16 +11,17 @@
 using namespace std;
 
 // Define PQNode Class
-template <class Type> struct PQNode {
+template <class keyType, class elementType> struct PQNode {
 public:
     PQNode *next, *prev;
-    Type element;
+    keyType key;
+    elementType element;
 };
 
-template <class Type> class UnsortedPQ {
+template <class keyType, class elementType> class UnsortedPQ {
 private:
-    PQNode<Type> *front, *rear;
-  int count;
+    PQNode<keyType, elementType> *front, *rear;
+    int count;
 
 public:
   UnsortedPQ(void) {
@@ -30,7 +31,7 @@ public:
   };
   // Performs an insertion of "n" items from dataArray
   // into the priority queue
-  UnsortedPQ(Type *dataArray, int n) {
+  UnsortedPQ(int *dataArray, int n) {
     count = 0;
     front = NULL;
     rear = NULL;
@@ -38,9 +39,7 @@ public:
       insertItem(dataArray[i]);
     }
   };
-  ~UnsortedPQ(void) {
-    cout << "\nUnsorted Priority Queue has been deconstructed.\n";
-  };
+  ~UnsortedPQ() = default;;
   bool isEmpty() {
     if (size() == 0)
       return true;
@@ -49,9 +48,10 @@ public:
   };
   int size() { return count; };
   // inserts a piece of data into the priority queue
-  void insertItem(Type data) {
-    auto *newNode = new PQNode<Type>();
-    newNode->element = data;
+  void insertItem(keyType key, elementType element) {
+    auto *newNode = new PQNode<keyType, elementType>();
+    newNode->key = key;
+    newNode->element = element;
     if (front == NULL) {
       front = rear = newNode;
     } else {
@@ -63,14 +63,14 @@ public:
   };
   // removes and returns the minimum value in the queue
   // throws an exception if the queue is empty
-  Type removeMin(void){
+  keyType removeMin(void){
 
     if (isEmpty()) {
       cout << "Prority Queue is Empty.";
       return 0;
     }
 
-    Type min = 100;
+    int min = 100;
     auto *itr = front;
     auto *tmp = itr;
     while (itr != NULL) {
@@ -103,14 +103,14 @@ public:
 
   // return the minimum value in the queue without removing it
   // throws an exception if the queue is empty
-  Type minValue(void){
+  keyType minValue(void){
 
     if (isEmpty()) {
       cout << "Prority Queue is Empty.\n";
       return 0;
     }
 
-    Type min = 100;
+    int min = 100;
     auto *itr = front;
 
     while (itr != NULL) {
@@ -121,6 +121,47 @@ public:
     }
     return min;
   };
+
+    int maxValue(){
+        if (isEmpty()) {
+            cout << "Prority Queue is Empty.\n";
+            return 0;
+        }
+        int max = 0;
+        auto *itr = front;
+        while (itr != NULL) {
+            if (max < itr->element) {
+                max = itr->element;
+            }
+            itr = itr->next;
+        }
+        return max;
+    };
+
+    void updateElement(keyType k, int v){
+        if (isEmpty()) {
+            cout << "Prority Queue is Empty.\n";
+            return;
+        }
+        auto *itr = front;
+        while (itr != NULL) {
+            if(k==itr->key){
+                itr->element = v;
+            }
+            itr = itr->next;
+        }
+    };
+
+    keyType getKey(){
+        auto *itr = front;
+        while (itr != NULL) {
+            if(maxValue()==itr->element){
+                return itr->key;
+            }
+            itr = itr->next;
+        }
+        return NULL;
+    }
 
   void printUnsortedPQ() {
     if (isEmpty()) {

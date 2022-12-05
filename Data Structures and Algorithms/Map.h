@@ -1,4 +1,4 @@
-//C SCE 3301 - Algorithms and Data Structures
+// CSCE 3301 - Algorithms and Data Structures
 // Map.h
 // Map
 //
@@ -45,7 +45,7 @@ public:
             put(dataArray[i], "t");
         }
     };
-    ~Map() { cout << "\nMap has been deconstructed.\n"; };
+    ~Map() = default;;
     bool isEmpty() {
         if (size() == 0)
             return true;
@@ -96,6 +96,15 @@ public:
         }
     };
 
+    bool exists(keyType key){
+        for (Entry<keyType, valueType> entry : mapList) {
+            if (entry.getKey() == key) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     keyType key(keyType key, valueType value) {
         for (Entry<keyType, valueType> entry : mapList) {
             if (entry.getValue() == value) {
@@ -105,7 +114,7 @@ public:
         return NULL;
     };
 
-    valueType value(keyType key, valueType value) {
+    valueType value(keyType key) {
         for (Entry<keyType, valueType> entry : mapList) {
             if (entry.getKey() == key) {
                 return entry.getValue();

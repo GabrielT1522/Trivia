@@ -1,6 +1,8 @@
+// CSCE 3301 - Algorithms and Data Structures
+// Trivia.h
+// Trivia
 //
-// Created by Gabriel Torres on 12/2/22.
-//
+// Created by Gabriel Torres on 11/20/22.
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -29,13 +31,15 @@ private:
     vector<Player*> playerVector;
     Map<string, string> board;
     Deque<Player*> playerQueue;
+    UnsortedPQ<Player* , int> playerPQ;
 
 public:
     Trivia(){
         string category;
         string question;
         string answer1, answer2, answer3, answer4;
-        int answerIndex, pointsWorth;
+        char answerIndex;
+        int pointsWorth;
 
         ifstream inFile("/Users/gabrieltorres/CLionProjects/Trivia/trivia.txt");
         string line;
@@ -65,7 +69,7 @@ public:
 
             if (!getline(inFile, line) )
                 break;
-            answerIndex = stoi(line);
+            answerIndex = line[0];
 
             if (!getline(inFile, line) )
                 break;
@@ -82,10 +86,10 @@ public:
     void setPlayers(){
         string name;
         rollDice();
+        cout << endl;
         for (int i=0;i<getNumOfPlayers();i++){
             cout << "Enter the name for Player " << i+1 << ": ";
-            cin.ignore();
-            getline(cin, name);
+            cin >> name;
             auto *players = new Player(name);
             players->setOrder(diceResult[i]);
             cout << "Your dice rolled a " << players->getOrder() << endl << endl;
@@ -97,7 +101,7 @@ public:
         int players;
         bool approved;
         do{
-            cout << "Enter the number of players: ";
+            cout << "Enter the number of players to begin: ";
             cin >> players;
             if (players == 2 || players == 3 || players == 4){
                 approved = true;
@@ -114,23 +118,68 @@ public:
         sorting.bubbleSort(getNumOfPlayers());
         int *sortedArray = sorting.sortedArray();
         for(int i=0;i<getNumOfPlayers();i++) {
-
-          for(int j=0;j<getNumOfPlayers();j++){
-               if (playerVector.at(i)->getOrder()==*(sortedArray + j))
-                    playerQueue.insertFirst(playerVector.at(i));
-              cout << playerVector.at(i)->getName();
+            for(int j=0;j<getNumOfPlayers();j++){
+               if (playerVector.at(i)->getOrder()==*(sortedArray + j)) {
+                   playerQueue.insertFirst(playerVector.at(j));
+                   playerPQ.insertItem(playerVector.at(j), 0);
+               }
             }
         }
     }
 
     void gameSequence(){
-        char decision;
-        while(decision != 'y'){
-            cout << "Contestant: " << playerQueue.first()->getOrder() << endl;
+        char d{};
+        string key;
+        while(d!='y'){
+            cout << "\nIt is " << playerQueue.first()->getName() << "'s turn!"<< endl;
+            showBoard();
+
+            bool verify;
+            do {
+                cout << "\nPlease enter a question key: ";
+                cin >> key;
+                if (!board.exists(key)) {
+                    cout << "The key '" << key << "' was not found, please re-enter an appropriate key.\n";
+                    verify = false;
+                }else
+                    verify = true;
+            }while(!verify);
+
+            for (Question *question : questionVector){
+                if(question->getCateogry()==key){
+                    cout << "\n" << board.value(key);
+                    question->printQuestion();
+                    char answer;
+                    cout << "Please enter your answer as a single lower-case letter: ";
+                    cin >> answer;
+                    if(question->isCorrect(answer)){
+                        playerQueue.first()->setMoney(question->getPointsWorth());
+                        playerPQ.updateElement(playerQueue.first(), playerQueue.first()->getMoney());
+                    }
+                }
+            }
+            showLeaderboard();
+
+            board.remove(key);
             playerQueue.insertLast(playerQueue.first());
             playerQueue.removeFirst();
-            cin >> decision;
+
+            if (winner()){
+                break;
+            }
+
+            cout << "\nWould you like to exit the game?\n";
+            cout << "Enter y to exit. Enter any other key to continue: ";
+            cin >> d;
         }
+    }
+
+    bool winner(){
+        if (playerPQ.maxValue() >= 1200 || board.isEmpty()){
+            cout << "\nCongratulations! " << playerPQ.getKey()->getName() << " has won with $" << playerPQ.getKey()->getMoney() << "!";
+            return true;
+        }
+        return false;
     }
 
     int getNumOfPlayers(){
@@ -153,10 +202,16 @@ public:
             }
         }
     }
+    void showLeaderboard(){
+        cout << "\n| Leaderboard |\n";
+        for (Player *players : playerVector){
+            cout << "| " << players->getName() << ": $" << players->getMoney() << " | ";
+        }
+    };
 
     void showBoard(){
-        cout << "Trivia Board\n";
-        cout << "Category A: Music\nCategory B: Animals\nCategory C: Technology\n| ";
+        cout << "| Trivia Board |\n";
+        cout << "| Category A: Music\n| Category B: Animals\n| Category C: Technology\n| ";
         for(int i=0;i<board.size();i++) {
             cout << board.getMapListKey(i) << " | ";
         }

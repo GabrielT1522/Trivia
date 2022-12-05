@@ -4,7 +4,7 @@ Percussion
 Woodwind
 Strings
 Brass
-2
+b
 100
 A2
 How many major scales are there?
@@ -12,7 +12,7 @@ four
 eight
 twelve
 sixteen
-3
+c
 300
 A3
 Who composed the piano piece Clair de Lune?
@@ -20,21 +20,53 @@ Johann Sebastian Bach
 Wolfgang Amadeus Mozart
 Claude Debussy
 Ludwig van Beethoven
-3
+c
 500
 B1
-Who composed the piano piece Clair de Lune?
-Johann Sebastian Bach
-Wolfgang Amadeus Mozart
-Claude Debussy
-Ludwig van Beethoven
-3
-500
+How many legs does a spider have?
+8
+6
+10
+4
+a
+100
 B2
-Who composed the piano piece Clair de Lune?
-Johann Sebastian Bach
-Wolfgang Amadeus Mozart
-Claude Debussy
-Ludwig van Beethoven
-3
+Which of the following is NOT a mammal?
+Whale
+Turtle
+Platypus
+Antelope
+b
+300
+B3
+Which mammal has the most powerful bite?
+Alligator
+Bear
+Hippopotamus
+Lion
+c
+500
+C1
+How many bits are in a byte?
+2
+4
+8
+64
+c
+100
+C2
+When was the first iPhone released?
+2006
+2007
+2008
+2009
+b
+300
+C3
+Which popular company designed the first CPU?
+AMD
+Dell
+Apple
+Intel
+d
 500
